@@ -1,4 +1,4 @@
-package tqs.airquality.services;
+package tqs.airquality.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,20 @@ public class WeatherbitService {
 
     public Optional<City> getCityByNameAndCountry(String city, String country){
 
-        return Optional.empty();
+        City ct = repository.getDetailsByCityNameAndCountry(city, country);
+        if(ct == null)
+            return Optional.empty();
+        return Optional.of(ct);
     }
 
     public Optional<City> getCityById(long id){
 
-        return Optional.empty();
+        City city = repository.getDetailsByCityId(id);
+        if(city == null)
+            return Optional.empty();
+        return Optional.of(city);
     }
+
+
 
 }

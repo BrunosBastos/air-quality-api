@@ -7,7 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tqs.airquality.model.City;
-import tqs.airquality.services.WeatherbitService;
+import tqs.airquality.service.WeatherbitService;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tqs.airquality.model.City;
-import tqs.airquality.services.WeatherbitService;
+import tqs.airquality.service.WeatherbitService;
 
 import java.util.Optional;
 
