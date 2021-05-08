@@ -27,9 +27,9 @@ public class WeatherBitRepository {
     public City getDetailsByCityNameAndCountry(String cityName, String country){
         try{
             String url = BASE_URL + "?city=" + cityName + "&country=" + country + "&key=" + KEY;
+            System.out.println(url);
             return this.restTemplate.getForObject(url, City.class);
         }catch (Exception e){
-
             System.err.println(e.toString());
         }
         return null;

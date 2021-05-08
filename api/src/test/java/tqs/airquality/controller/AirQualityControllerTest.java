@@ -37,8 +37,8 @@ class AirQualityControllerTest {
         City data = new City();
         data.setCity_name("Aveiro");
         data.setCountry_code("PT");
-        data.setLon(-8.64554);
-        data.setLat(40.64427);
+        data.setLon("-8.64554");
+        data.setLat("40.64427");
         data.setState_code("02");
         data.setTimezone("Europe/Lisbon");
 
@@ -76,8 +76,8 @@ class AirQualityControllerTest {
         City data = new City();
         data.setCity_name("Aveiro");
         data.setCountry_code("PT");
-        data.setLon(-8.64554);
-        data.setLat(40.64427);
+        data.setLon("-8.64554");
+        data.setLat("40.64427");
         data.setState_code("02");
         data.setTimezone("Europe/Lisbon");
 

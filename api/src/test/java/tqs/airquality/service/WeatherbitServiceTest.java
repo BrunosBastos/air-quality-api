@@ -34,8 +34,8 @@ class WeatherbitServiceTest {
         City aveiro = new City();
         aveiro.setCity_name("Aveiro");
         aveiro.setCountry_code("PT");
-        aveiro.setLon(-8.64554);
-        aveiro.setLat(40.64427);
+        aveiro.setLon("-8.64554");
+        aveiro.setLat("40.64427");
         aveiro.setState_code("02");
         aveiro.setTimezone("Europe/Lisbon");
 

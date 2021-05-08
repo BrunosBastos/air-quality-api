@@ -1,10 +1,7 @@
-import {TextField} from '@material-ui/core';
-import {Button} from '@material-ui/core';
+import {TextField, Button} from '@material-ui/core';
 import {Row} from 'react-bootstrap';
 
 export default function SoftNCare(props){
-
-
 
     return(
         <div className="container">

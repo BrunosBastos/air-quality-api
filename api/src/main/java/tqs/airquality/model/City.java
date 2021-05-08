@@ -8,8 +8,8 @@ import java.util.List;
 @Data
 public class City implements Serializable {
 
-    private double lat;
-    private double lon;
+    private String lat;
+    private String lon;
     private String timezone;
     private String city_name;
     private String country_code;
