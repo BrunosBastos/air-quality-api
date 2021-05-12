@@ -7,7 +7,7 @@ import tqs.airquality.model.City;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CacheManagerTest {
+class CacheManagerTest {
 
     @Autowired
     private CacheManager cacheManager;
@@ -15,7 +15,7 @@ public class CacheManagerTest {
     private City cityA;
 
     @BeforeEach
-    public void startUp(){
+    void startUp(){
 
         cacheManager = new CacheManager();
 
@@ -30,43 +30,43 @@ public class CacheManagerTest {
     }
 
     @Test
-    public void test_whenEmptyCache_returnEmpty(){
-        assertThat(cacheManager.getCache()).hasSize(0);
+    void test_whenEmptyCache_returnEmpty(){
+        assertThat(cacheManager.getCache()).isEmpty();
     }
 
     @Test
-    public void test_whenInCacheHasValue_returnValue(){
+    void test_whenInCacheHasValue_returnValue(){
 
         String url = "test";
         cacheManager.addToCache(url, cityA);
 
         CachePair pair = cacheManager.getCache(url);
-        assertThat(pair.getValue().get()).isEqualTo(cityA);
+        assertThat(pair.getValue()).contains(cityA);
         assertThat(pair.getTime()).isGreaterThan(System.currentTimeMillis());
         assertThat(cacheManager.getHits()).isEqualTo(1);
         assertThat(cacheManager.getRequests()).isEqualTo(1);
-        assertThat(cacheManager.getMisses()).isEqualTo(0);
+        assertThat(cacheManager.getMisses()).isZero();
         assertThat(cacheManager.getCache()).hasSize(1);
 
     }
 
     @Test
-    public void test_whenInCacheNotHasValue_returnEmpty(){
+    void test_whenInCacheNotHasValue_returnEmpty(){
         String url = "test";
         cacheManager.addToCache(url, null);
 
         CachePair pair = cacheManager.getCache(url);
-        assertThat(pair.getValue().isEmpty()).isTrue();
+        assertThat(pair.getValue()).isEmpty();
         assertThat(pair.getTime()).isGreaterThan(System.currentTimeMillis());
         assertThat(cacheManager.getHits()).isEqualTo(1);
         assertThat(cacheManager.getRequests()).isEqualTo(1);
-        assertThat(cacheManager.getMisses()).isEqualTo(0);
+        assertThat(cacheManager.getMisses()).isZero();
         assertThat(cacheManager.getCache()).hasSize(1);
 
     }
 
     @Test
-    public void test_whenNotInCache_returnNull(){
+    void test_whenNotInCache_returnNull(){
         String url = "test";
 
         CachePair pair = cacheManager.getCache(url);
@@ -74,13 +74,13 @@ public class CacheManagerTest {
         assertThat(pair).isNull();
         assertThat(cacheManager.getMisses()).isEqualTo(1);
         assertThat(cacheManager.getRequests()).isEqualTo(1);
-        assertThat(cacheManager.getHits()).isEqualTo(0);
-        assertThat(cacheManager.getCache()).hasSize(0);
+        assertThat(cacheManager.getHits()).isZero();
+        assertThat(cacheManager.getCache()).isEmpty();
 
     }
 
     @Test
-    public void test_whenTimeExpires_returnNull(){
+    void test_whenTimeExpires_returnNull(){
         cacheManager.setTimeToLive(0);
         String url = "test";
 
@@ -91,8 +91,8 @@ public class CacheManagerTest {
         assertThat(pair).isNull();
         assertThat(cacheManager.getMisses()).isEqualTo(1);
         assertThat(cacheManager.getRequests()).isEqualTo(1);
-        assertThat(cacheManager.getHits()).isEqualTo(0);
-        assertThat(cacheManager.getCache()).hasSize(0);
+        assertThat(cacheManager.getHits()).isZero();
+        assertThat(cacheManager.getCache()).isEmpty();
 
     }
 

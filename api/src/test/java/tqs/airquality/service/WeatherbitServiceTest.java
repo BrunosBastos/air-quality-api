@@ -26,10 +26,10 @@ class WeatherbitServiceTest {
     @InjectMocks
     private WeatherbitService service;
 
-    private final long AVEIRO_ID = 2742611l;
+    private final long AVEIRO_ID = 2742611L;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
 
         City aveiro = new City();
         aveiro.setCity_name("Aveiro");
@@ -46,14 +46,14 @@ class WeatherbitServiceTest {
     }
 
     @Test
-    public void test_whenValidId_thenReturnCity() throws Exception{
+    void test_whenValidId_thenReturnCity() throws Exception{
 
         Optional<City> fromDb = service.getCityById(AVEIRO_ID);
 
         assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
         assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
-        assertThat(fromDb.get().getLon()).isEqualTo(-8.64554);
-        assertThat(fromDb.get().getLat()).isEqualTo(40.64427);
+        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
+        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
         assertThat(fromDb.get().getState_code()).isEqualTo("02");
         assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
 
@@ -62,7 +62,7 @@ class WeatherbitServiceTest {
     }
 
     @Test
-    public void test_whenInValidId_thenReturnEmpty() throws Exception{
+    void test_whenInValidId_thenReturnEmpty() throws Exception{
 
         Optional<City> fromDb = service.getCityById(-1L);
 
@@ -73,14 +73,14 @@ class WeatherbitServiceTest {
     }
 
     @Test
-    public void test_whenValidNameCountry_thenReturnCity() throws Exception{
+    void test_whenValidNameCountry_thenReturnCity() throws Exception{
 
         Optional<City> fromDb = service.getCityByNameAndCountry("Aveiro", "PT");
 
         assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
         assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
-        assertThat(fromDb.get().getLon()).isEqualTo(-8.64554);
-        assertThat(fromDb.get().getLat()).isEqualTo(40.64427);
+        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
+        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
         assertThat(fromDb.get().getState_code()).isEqualTo("02");
         assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
 
@@ -89,7 +89,7 @@ class WeatherbitServiceTest {
     }
 
     @Test
-    public void test_whenInValidNameCountry_thenReturnEmpty() throws Exception{
+    void test_whenInValidNameCountry_thenReturnEmpty() throws Exception{
 
         Optional<City> fromDb = service.getCityByNameAndCountry("Aveiro", "ES");
 
@@ -99,5 +99,48 @@ class WeatherbitServiceTest {
                 .getDetailsByCityNameAndCountry("Aveiro", "ES");
     }
 
+    @Test
+    void test_whenDuplicatedRequestId_thenReturnCache() throws Exception{
+
+        service.getCityById(AVEIRO_ID);
+        Optional<City> fromDb= service.getCityById(AVEIRO_ID);
+
+        assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
+        assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
+        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
+        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
+        assertThat(fromDb.get().getState_code()).isEqualTo("02");
+        assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
+        assertThat(service.getCacheStats().getRequests()).isEqualTo(2);
+        assertThat(service.getCacheStats().getHits()).isEqualTo(1);
+        assertThat(service.getCacheStats().getMisses()).isEqualTo(1);
+
+        // if cache is called then there should only be a request made to the repo
+        verify(repository, VerificationModeFactory.times(1))
+                .getDetailsByCityId(anyLong());
+
+    }
+
+    @Test
+    void test_whenDuplicatedRequestName_thenReturnCache() throws Exception{
+
+        service.getCityByNameAndCountry("Aveiro", "PT");
+        Optional<City> fromDb= service.getCityByNameAndCountry("Aveiro", "PT");
+
+        assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
+        assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
+        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
+        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
+        assertThat(fromDb.get().getState_code()).isEqualTo("02");
+        assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
+        assertThat(service.getCacheStats().getRequests()).isEqualTo(2);
+        assertThat(service.getCacheStats().getHits()).isEqualTo(1);
+        assertThat(service.getCacheStats().getMisses()).isEqualTo(1);
+
+        // if cache is called then there should only be a request made to the repo
+        verify(repository, VerificationModeFactory.times(1))
+                .getDetailsByCityNameAndCountry(anyString(), anyString());
+
+    }
 
 }

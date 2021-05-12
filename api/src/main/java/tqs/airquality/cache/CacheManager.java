@@ -21,7 +21,7 @@ public class CacheManager {
 
     public CacheManager(){
         cache = new HashMap<>();
-        timeToLive = 10;
+        timeToLive = 1000;
     }
 
     public CacheManager(int timeToLive){

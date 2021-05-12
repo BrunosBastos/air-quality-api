@@ -3,6 +3,7 @@ package tqs.airquality.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tqs.airquality.cache.CacheManager;
+import tqs.airquality.model.CacheStats;
 import tqs.airquality.model.City;
 import tqs.airquality.repository.WeatherBitRepository;
 import tqs.airquality.utils.CityMapper;
@@ -14,8 +15,7 @@ import java.util.OptionalInt;
 @Service
 public class WeatherbitService {
 
-    @Autowired
-    private CacheManager cacheManager;
+    private CacheManager cacheManager = new CacheManager();
 
     @Autowired
     private WeatherBitRepository repository;
@@ -50,4 +50,13 @@ public class WeatherbitService {
         return Optional.of(ct);
     }
 
+    public CacheStats getCacheStats() {
+
+        CacheStats stats = new CacheStats(
+                cacheManager.getRequests(),
+                cacheManager.getHits(),
+                cacheManager.getMisses()
+        );
+        return stats;
+    }
 }

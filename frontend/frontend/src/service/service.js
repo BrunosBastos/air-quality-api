@@ -1,7 +1,7 @@
 
 
 
-class PencilCase{
+class Service{
 
     getNameNCountry(city, country) {
         return fetch("http://localhost:8080/?city=" + city + "&country=" + country
@@ -18,7 +18,14 @@ class PencilCase{
         });
     }
 
+    getCache(){
+        return fetch("http://localhost:8080/cache", {
+            method: 'GET',
+            mode: 'cors'
+        })
+    }
+
 }
 
 
-export default new PencilCase();
+export default new Service();

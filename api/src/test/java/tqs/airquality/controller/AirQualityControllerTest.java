@@ -32,7 +32,7 @@ class AirQualityControllerTest {
     private final long AVEIRO_ID = 2742611l;
 
     @Test
-    public void test_getCityValidNameCountry_thenReturnData() throws  Exception{
+    void test_getCityValidNameCountry_thenReturnData() throws  Exception{
 
         City data = new City();
         data.setCity_name("Aveiro");
@@ -59,7 +59,7 @@ class AirQualityControllerTest {
     }
 
     @Test
-    public void test_getCityByInvalidNameCountry_thenReturnNotFound() throws Exception{
+    void test_getCityByInvalidNameCountry_thenReturnNotFound() throws Exception{
         given(service.getCityByNameAndCountry("Aveiro", "ES"))
                 .willReturn(Optional.empty());
 
@@ -72,7 +72,7 @@ class AirQualityControllerTest {
 
 
     @Test
-    public void test_getCityByValidId_thenReturnData() throws Exception{
+    void test_getCityByValidId_thenReturnData() throws Exception{
         City data = new City();
         data.setCity_name("Aveiro");
         data.setCountry_code("PT");
@@ -97,7 +97,7 @@ class AirQualityControllerTest {
     }
 
     @Test
-    public void test_getCityByInvalidId_thenReturnNotFound() throws Exception{
+    void test_getCityByInvalidId_thenReturnNotFound() throws Exception{
         given(service.getCityById(-1l))
                 .willReturn(Optional.empty());
 

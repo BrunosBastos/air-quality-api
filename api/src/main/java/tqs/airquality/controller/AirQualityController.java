@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tqs.airquality.cache.CacheManager;
+import tqs.airquality.model.CacheStats;
 import tqs.airquality.model.City;
 import tqs.airquality.service.WeatherbitService;
 import tqs.airquality.utils.CityMapper;
@@ -46,4 +47,12 @@ public class AirQualityController {
         Optional<City> aqd = service.getCityById(id);
         return aqd.map(city -> new ResponseEntity<>(city, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/cache")
+    public ResponseEntity<CacheStats> getCacheStats(){
+        CacheStats stats = service.getCacheStats();
+        return new ResponseEntity<>(stats, HttpStatus.OK);
+    }
+
+
 }
