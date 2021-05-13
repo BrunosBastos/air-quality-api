@@ -24,22 +24,17 @@ public class AirQualityController {
     @Autowired
     private WeatherbitService service;
 
-    public AirQualityController(WeatherbitService service){
-        this.service = service;
-    }
-
-    @GetMapping(value = "/", params = {"city", "country"})
+    @GetMapping(value = "/airquality", params = {"city", "country"})
     public ResponseEntity<City> getCityByNameCountry(
             HttpServletRequest request,
             @RequestParam("city") String city, @RequestParam("country") String country
     ){
-        System.out.println("pedido");
         Optional<City> aqd = service.getCityByNameAndCountry(city, country);
         return aqd.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
-    @GetMapping(value = "/", params = "id")
+    @GetMapping(value = "/airquality", params = "id")
     public ResponseEntity<City> getCityById(
             HttpServletRequest request,
             @RequestParam("id") long id

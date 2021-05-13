@@ -10,7 +10,7 @@ export default function SearchId(props){
                 <TextField id="city_id" name="city_id" label="City ID" variant="outlined" />
             </Row>
             <Row>
-                <Button 
+                <Button id="search_by_id"
                 onClick={ () => props.handler(
                     document.getElementById("city_id").value
                     )} 

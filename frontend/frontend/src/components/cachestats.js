@@ -38,18 +38,18 @@ export default function CacheStats(props){
             </Row>
             <Row>
                 <Col>
-                    <h1>{requests}</h1>
+                    <h1 id="requests">{requests}</h1>
                 </Col>
                 <Col>
-                    <h1>{hits}</h1>
+                    <h1 id="hits">{hits}</h1>
                 </Col>
                 <Col>
-                    <h1>{misses}</h1>
+                    <h1 id="misses">{misses}</h1>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Button onClick={submit}>Refresh</Button>
+                    <Button id="refresh" onClick={submit}>Refresh</Button>
                 </Col>
             </Row>
         </div>

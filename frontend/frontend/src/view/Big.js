@@ -8,7 +8,7 @@ import {Row, Col} from 'react-bootstrap';
 
 export default function Big(){
 
-    const [city, setCity] = useState(null);
+    const [city, setCity] = useState(false);
 
     const handlerName = (name, country) => {
         console.log(name, country);
@@ -41,7 +41,7 @@ export default function Big(){
                 <Col md="4"></Col>
                 <Col>
             {   
-                city
+                city == false ? "" : city != null
                 ? <Results style={{margin:"auto"}} city={city} />
                 : <h1>City Data not found</h1>
             }

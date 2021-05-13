@@ -45,8 +45,7 @@ class AirQualityControllerTest {
         given(service.getCityByNameAndCountry("Aveiro", "PT"))
                 .willReturn(Optional.of(data));
 
-        // TODO: check if it is worth to check this much data
-        mockMvc.perform(MockMvcRequestBuilders.get("/?city=Aveiro&country=PT"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/airquality?city=Aveiro&country=PT"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("city_name").value("Aveiro"))
                 .andExpect(jsonPath("country_code").value("PT"))
@@ -63,7 +62,7 @@ class AirQualityControllerTest {
         given(service.getCityByNameAndCountry("Aveiro", "ES"))
                 .willReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/?city=Aveiro&country=ES"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/airquality?city=Aveiro&country=ES"))
                 .andExpect(status().isNotFound());
 
         verify(service, times(1)).getCityByNameAndCountry("Aveiro", "ES");
@@ -84,7 +83,7 @@ class AirQualityControllerTest {
         given(service.getCityById(AVEIRO_ID))
                 .willReturn(Optional.of(data));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/?id="+AVEIRO_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get("/airquality?id="+AVEIRO_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("city_name").value("Aveiro"))
                 .andExpect(jsonPath("country_code").value("PT"))
@@ -101,7 +100,7 @@ class AirQualityControllerTest {
         given(service.getCityById(-1l))
                 .willReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/?id=-1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/airquality?id=-1"))
                 .andExpect(status().isNotFound());
 
         verify(service, times(1)).getCityById(-1l);

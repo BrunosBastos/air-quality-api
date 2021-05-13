@@ -10,7 +10,7 @@ export default function SoftNCare(props){
                 <TextField className="mx-4" id="country" name="country" label="Country Code" variant="outlined" />
             </Row>
             <Row>
-                <Button 
+                <Button id="search_by_name"
                 onClick={ () => props.handler(
                     document.getElementById("name").value,
                     document.getElementById("country").value

@@ -12,11 +12,8 @@ public class WeatherBitRepository {
     private static final String BASE_URL = "https://api.weatherbit.io/v2.0/current/airquality";
     private static final String KEY = "8813e52882da41bb8ed899fdbdf7f7df";
 
-    private final RestTemplate restTemplate;
-
-    public WeatherBitRepository(){
-        restTemplate = new RestTemplate();
-    }
+    @Autowired
+    private RestTemplate restTemplate;
 
     public City getDetailsByCityId(long cityId){
         try {
