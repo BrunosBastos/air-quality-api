@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import tqs.airquality.cache.CacheManager;
 import tqs.airquality.model.CacheStats;
 import tqs.airquality.model.City;
 import tqs.airquality.service.WeatherbitService;
-import tqs.airquality.utils.CityMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin(allowedHeaders = "localhost:3000")
 @RestController
 public class AirQualityController {
 

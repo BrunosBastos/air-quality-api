@@ -1,10 +1,11 @@
 package tqs.airquality.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Setter @Getter
 public class AirQualityData implements Serializable {
     private int aqi;
     private double o3;

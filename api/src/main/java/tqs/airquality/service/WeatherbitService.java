@@ -6,11 +6,8 @@ import tqs.airquality.cache.CacheManager;
 import tqs.airquality.model.CacheStats;
 import tqs.airquality.model.City;
 import tqs.airquality.repository.WeatherBitRepository;
-import tqs.airquality.utils.CityMapper;
 import tqs.airquality.cache.CachePair;
-
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 public class WeatherbitService {
@@ -51,12 +48,10 @@ public class WeatherbitService {
     }
 
     public CacheStats getCacheStats() {
-
-        CacheStats stats = new CacheStats(
+        return new CacheStats(
                 cacheManager.getRequests(),
                 cacheManager.getHits(),
                 cacheManager.getMisses()
         );
-        return stats;
     }
 }

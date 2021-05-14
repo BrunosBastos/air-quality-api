@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import tqs.airquality.model.City;
 
@@ -77,7 +78,7 @@ class WeatherBitRepositoryTest {
         String url = BASE_URL + "?city_id=-1&key=" + KEY;
         when(restTemplate.getForObject(
                 url, City.class))
-                .thenReturn(null);
+                .thenThrow(new RestClientException("error"));
         assertThat(repository.getDetailsByCityId(-1L)).isNull();
         verify(restTemplate, times(1)).getForObject(url, City.class);
     }
@@ -87,7 +88,7 @@ class WeatherBitRepositoryTest {
         String url = BASE_URL + "?city=Aveiro&country=ES&key=" + KEY;
         when(restTemplate.getForObject(
                 url, City.class))
-                .thenReturn(null);
+                .thenThrow(new RestClientException("error"));
         assertThat(repository.getDetailsByCityNameAndCountry("Aveiro", "ES")).isNull();
         verify(restTemplate, times(1)).getForObject(url, City.class);
     }

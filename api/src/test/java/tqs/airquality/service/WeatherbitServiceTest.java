@@ -66,7 +66,7 @@ class WeatherbitServiceTest {
 
         Optional<City> fromDb = service.getCityById(-1L);
 
-        assertThat(fromDb.isEmpty());
+        assertThat(fromDb).isEmpty();
 
         verify(repository, VerificationModeFactory.times(1))
                 .getDetailsByCityId(anyLong());
@@ -93,54 +93,9 @@ class WeatherbitServiceTest {
 
         Optional<City> fromDb = service.getCityByNameAndCountry("Aveiro", "ES");
 
-        assertThat(fromDb.isEmpty());
+        assertThat(fromDb).isEmpty();
 
         verify(repository, VerificationModeFactory.times(1))
                 .getDetailsByCityNameAndCountry("Aveiro", "ES");
     }
-
-    @Test
-    void test_whenDuplicatedRequestId_thenReturnCache() throws Exception{
-
-        service.getCityById(AVEIRO_ID);
-        Optional<City> fromDb= service.getCityById(AVEIRO_ID);
-
-        assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
-        assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
-        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
-        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
-        assertThat(fromDb.get().getState_code()).isEqualTo("02");
-        assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
-        assertThat(service.getCacheStats().getRequests()).isEqualTo(2);
-        assertThat(service.getCacheStats().getHits()).isEqualTo(1);
-        assertThat(service.getCacheStats().getMisses()).isEqualTo(1);
-
-        // if cache is called then there should only be a request made to the repo
-        verify(repository, VerificationModeFactory.times(1))
-                .getDetailsByCityId(anyLong());
-
-    }
-
-    @Test
-    void test_whenDuplicatedRequestName_thenReturnCache() throws Exception{
-
-        service.getCityByNameAndCountry("Aveiro", "PT");
-        Optional<City> fromDb= service.getCityByNameAndCountry("Aveiro", "PT");
-
-        assertThat(fromDb.get().getCity_name()).isEqualTo("Aveiro");
-        assertThat(fromDb.get().getCountry_code()).isEqualTo("PT");
-        assertThat(fromDb.get().getLon()).isEqualTo("-8.64554");
-        assertThat(fromDb.get().getLat()).isEqualTo("40.64427");
-        assertThat(fromDb.get().getState_code()).isEqualTo("02");
-        assertThat(fromDb.get().getTimezone()).isEqualTo("Europe/Lisbon");
-        assertThat(service.getCacheStats().getRequests()).isEqualTo(2);
-        assertThat(service.getCacheStats().getHits()).isEqualTo(1);
-        assertThat(service.getCacheStats().getMisses()).isEqualTo(1);
-
-        // if cache is called then there should only be a request made to the repo
-        verify(repository, VerificationModeFactory.times(1))
-                .getDetailsByCityNameAndCountry(anyString(), anyString());
-
-    }
-
 }

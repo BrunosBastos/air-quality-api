@@ -7,7 +7,6 @@ import tqs.airquality.model.City;
 
 import java.util.HashMap;
 import java.util.Optional;
-import tqs.airquality.cache.CachePair;
 
 @Getter @Setter @Component
 public class CacheManager {
@@ -48,7 +47,6 @@ public class CacheManager {
             CachePair cp = cache.get(url);
             if(cp.getTime() > System.currentTimeMillis()){
                 this.hits++;
-                System.out.println(hits);
                 return cp;
             }
             cache.remove(url);
